@@ -38,7 +38,8 @@ evaluation_data <- as.data.frame(evaluation_data)
 evaluation_data <- change_col_names(evaluation_data) 
 
 RF_Prediction_labels.S9 <- predict(classifier.RF, evaluation_data)
-
+RF_Prediction_labels.S9 <- matrix(as.numeric(RF_Prediction_labels.S9), nrow = 8)
+RF_Prediction_labels.S9 <- colMeans(RF_Prediction_labels.S9)
 
 # Importing S10 dataset
 S10E_path <- "~/Work/Examples/Cognitive/WCCI2020/competition dataset WCCI2020/Clinical-Brain-Computer-Interfaces-Challenge-WCCI-2020-Glasgow-master/E/parsed_P10E.mat" #change this to the directory that have S9 dataset
@@ -49,3 +50,5 @@ evaluation_data <- change_col_names(evaluation_data)
 
 
 RF_Prediction_labels.S10 <- predict(classifier.RF, evaluation_data)
+RF_Prediction_labels.S10 <- matrix(as.numeric(RF_Prediction_labels.S10), nrow = 8)
+RF_Prediction_labels.S10 <- colMeans(RF_Prediction_labels.S10)
