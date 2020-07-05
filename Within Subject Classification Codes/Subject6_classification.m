@@ -8,8 +8,8 @@ close all;
 T_filename = 'C:\Users\arashharatian\Documents\Work\Examples\Cognitive\WCCI2020\competition dataset WCCI2020\Clinical-Brain-Computer-Interfaces-Challenge-WCCI-2020-Glasgow-master\T\parsed_P06T.mat'; %put your "parsed_P06T.mat" file here
 load(T_filename);
 
-%% Filtering "RawEEGData" using 'butter' and 'filtfilt' with 8 or 30 cutoff frequency
-data = mybutterfilter(RawEEGData, 8, 13);
+%% Converting the data to 2D Matrix
+data = my2Dmatrix(RawEEGData);
 
 %% Filtering data using car filter
 data = mycarfilter(data);
@@ -18,16 +18,20 @@ data = mycarfilter(data);
 [data1, data2] = myclassseparator(data, Labels);
 
 %% Spliting data1 and data2 to train set and test set
-split_ratio =0.8;
-num1 = floor(size(data1, 3)*split_ratio);
-num2 = floor(size(data2, 3)*split_ratio);
-train_set1 = data1(:, :, 1:num1);
-train_set2 = data2(:, :, 1:num2);
-test_set1 = data1(:, :, num1+1:end);
-test_set2 = data2(:, :, num2+1:end);
+split_ratio = 0.8;
+
+m1 = size(data1, 3);
+idx = randperm(m1);
+train_set1 = data1(:,:,idx(1:round(split_ratio*m1))); 
+test_set1 = data1(:,:,idx(round(split_ratio*m1)+1:end));
+
+m2 = size(data2, 3);
+idx = randperm(m2);
+train_set2 = data2(:,:,idx(1:round(split_ratio*m1))); 
+test_set2 = data2(:,:,idx(round(split_ratio*m1)+1:end));
 
 %% Using CSP algorithm for extracting the features
-[w] = myCSP(train_set1, train_set2, 2);
+[w] = myCSP(train_set1, train_set2, 4);
 
 %% Extracting features of train set and test set
 train_set1_feautres = myfeatures(w, train_set1,'log');
@@ -59,8 +63,8 @@ disp(['Accuracy lda: ',num2str(LDA_accuracy), ' %'])
 E_filename = 'C:\Users\arashharatian\Documents\Work\Examples\Cognitive\WCCI2020\competition dataset WCCI2020\Clinical-Brain-Computer-Interfaces-Challenge-WCCI-2020-Glasgow-master\E\parsed_P06E.mat'; %put your "parsed_P06E.mat" file here
 load(E_filename);
 
-%% Filtering "RawEEGData" using 'butter' and 'filtfilt' with 8 or 30 cutoff frequency
-evaluation_data = mybutterfilter(RawEEGData, 8, 30);
+%% Converting the data to 2D Matrix
+evaluation_data = my2Dmatrix(RawEEGData);
 
 %% Filtering data using car filter
 evaluation_data = mycarfilter(evaluation_data);
