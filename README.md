@@ -4,11 +4,11 @@ This Repository  is for [**CBCI Challenge WCCI 2020**](https://github.com/5anirb
 * [About dataset](#About-dataset)
 * [Requirements](#Requirements)
 * [Methods and pipeline for train the model on data](#Methods-and-pipeline-for-train-the-model-on-data)
-	* [Within Subjects](#Within_Subjects)
-	*  [Cross Subjects](#Cross_Subjects)
-* [How to run](#How_to_run)
-* [Contributing](#Contributing)
-* [License](#License)
+	* [Within subjects](#within_subjects)
+	*  [Cross subjects](#cross_subjects)
+* [How to run](#how-to-run)
+* [Contributing](#contributing)
+* [License](#license)
 # About dataset
 [The dataset of the competition "Clinical Brain Computer Interfaces Challenge"](https://github.com/5anirban9/Clinical-Brain-Computer-Interfaces-Challenge-WCCI-2020-Glasgow) is about the EEG data of 10 hemiparetic stroke patients who are impaired either by left or right hand finger mobility. There are two files for each participant. The file name ending with "T" designates the training file, and the file name ending with "E" designates the evaluation/testing file.
 
@@ -19,7 +19,7 @@ To Run the codes you need:
 
 # Methods and pipeline for train the model on data
 
-## Within Subjects
+## Within subjects
 For this part of competition we use matlab to filter the data and run [CSP (Common Spatial Patterns)](https://link.springer.com/chapter/10.1007/978-3-642-34381-0_46) to exctract the features of data and make a LDA model to train on features and the prediciting the evaluation file.
 
 Each single subject method describes blow:
@@ -75,7 +75,7 @@ After all for prediciting **"Parsed_P08E.mat"** we load the dataset and filter t
 
 
 
-## Cross Subjects
+## Cross subjects
 
 For this part of competition we use **R programming language**. Frist attach the [**R.matlab**](https://cran.r-project.org/web/packages/R.matlab/index.html) package, and by using [**merging_var_epochs_subjets**](https://github.com/arashHaratian/CBCI-Challenge-WCCI-2020-Subjects-Classifiers/blob/a7d1e8830978b7a0e26f9704ba6245e6526ce299/Cross%20Subject%20Classification%20Codes/read_dataset.R#L264) we take variance of each channel in every second (512 data) from the 8 subject dataset that have labels (T files).
 Next, split the data to train and test and train a Random Forest model on train and check the accuracy of model. Then for final step we load the data of subject 9 and 10 and take the variacne of each channel in every second and lastly use the trained Random Forest classifier to predict the label of Subject 9 and Subject 10 separately.
